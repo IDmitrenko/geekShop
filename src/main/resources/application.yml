@@ -1,0 +1,15 @@
+server:
+  servlet:
+    context-path: /supershop
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/onlineshop?useUnicode=true&characterEncoding=utf8
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  thymeleaf:
+    cache: false

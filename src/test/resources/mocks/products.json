@@ -1,0 +1,30 @@
+[
+  {
+    "id" : "9a977f7f-92c3-44c2-a475-2b246b36cc30",
+    "title" : "Ананасы",
+    "price" : 500.00,
+    "available" : true,
+    "category" : 1
+  },
+  {
+    "id" : "46985b15-7f91-4aaf-aef6-4db0f6deed8f",
+    "title" : "Бананы",
+    "price" : 70.00,
+    "available" : true,
+    "category" : 1
+  },
+  {
+    "id" : "615747fe-6d90-48e4-90e9-041f10a75e3c",
+    "title" : "Гречка",
+    "price" : 100.00,
+    "available" : true,
+    "category" : 1
+  },
+  {
+    "id" : "13498fb4-837f-4bdb-b660-9aa909a91a76",
+    "title" : "Кефир",
+    "price" : 30.00,
+    "available" : true,
+    "category" : 0
+  }
+]
