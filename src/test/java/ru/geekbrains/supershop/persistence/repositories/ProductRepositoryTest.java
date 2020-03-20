@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,12 +50,12 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void mustFindAllDrinkProducts() {
+    public void mustFindAllFoodProducts() {
         Assert.assertEquals(3, productRepository.findAllByCategory(ProductCategory.FOOD).size());
     }
 
     @Test
-    public void mustFindAllFoodProducts() {
+    public void mustFindAllDrinkProducts() {
         Assert.assertEquals(1, productRepository.findAllByCategory(ProductCategory.DRINK).size());
     }
 

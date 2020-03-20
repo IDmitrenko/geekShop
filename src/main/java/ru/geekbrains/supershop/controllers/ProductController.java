@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.geekbrains.supershop.exceptions.ProductNotFoundException;
 import ru.geekbrains.supershop.services.ImageService;
 import ru.geekbrains.supershop.services.ProductService;
+import ru.geekbrains.supershop.services.utils.CHelper;
 
 import javax.imageio.ImageIO;
 
@@ -33,20 +34,31 @@ public class ProductController {
     @GetMapping("/{id}")
     public String getOneProduct(Model model, @PathVariable String id) throws ProductNotFoundException {
 
-        // TODO ДЗ - утилита, которая будет проверять UUID
-
-        model.addAttribute("product", productService.findOneById(UUID.fromString(id)));
-        return "product";
+        if (CHelper.parseUUIDString(id)) {
+            model.addAttribute("product", productService.findOneById(UUID.fromString(id)));
+            return "product";
+        }
+        return "redirect:/";
     }
 
-    @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getImage(@PathVariable String id) {
-
-        // TODO ДЗ - сделать поддержку множества картинок
 
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ImageIO.write(imageService.loadFileAsResource(id), "png", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getImages(@PathVariable String id) {
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(imageService.loadFileAsResourceImage(id), "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             throw new RuntimeException();
