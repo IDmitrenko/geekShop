@@ -16,7 +16,7 @@ public enum FileExtension {
     public static boolean isExtension(String name) {
        FileExtension[] extensions = FileExtension.values();
         for (FileExtension extension : extensions) {
-            if (extension.name == name) {
+            if (extension.name.equals(name)) {
                 return true;
             }
         }
