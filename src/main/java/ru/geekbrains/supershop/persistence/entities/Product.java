@@ -35,7 +35,13 @@ public class Product extends PersistableEntity {
     @Enumerated(EnumType.ORDINAL)
     private ProductCategory category;
 
+    @OneToOne
+    @JoinColumn(name = "image")
+    private Image image;
+
+/*
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Image> images;
+*/
 
 }

@@ -38,7 +38,9 @@ public class ProductRepositoryTest {
 
     {
         try {
-            productMocks = new ObjectMapper().readValue(new ClassPathResource("mocks/products.json").getFile(), new TypeReference<List<Product>>() {});
+            productMocks = new ObjectMapper()
+                    .readValue(new ClassPathResource("mocks/products.json").getFile(),
+                               new TypeReference<List<Product>>() {});
         } catch (IOException e) {
             e.printStackTrace();
         }

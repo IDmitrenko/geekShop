@@ -1,23 +1,25 @@
 package ru.geekbrains.supershop.controllers;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
 import ru.geekbrains.supershop.exceptions.ProductNotFoundException;
+import ru.geekbrains.supershop.persistence.entities.Image;
+import ru.geekbrains.supershop.persistence.pojo.ProductPojo;
 import ru.geekbrains.supershop.services.ImageService;
 import ru.geekbrains.supershop.services.ProductService;
 import ru.geekbrains.supershop.services.utils.CHelper;
 
 import javax.imageio.ImageIO;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -41,28 +43,34 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody byte[] getImage(@PathVariable String id) {
-
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(imageService.loadFileAsResource(id), "png", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
-    }
-
     @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody byte[] getImages(@PathVariable String id) {
+    public @ResponseBody
+    byte[] getImage(@PathVariable String id) throws IOException {
 
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(imageService.loadFileAsResourceImage(id), "png", byteArrayOutputStream);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedImage bufferedImage = imageService.loadFileAsResource(id);
+        if (bufferedImage != null) {
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException();
+        } else {
+            return new byte[0];
         }
     }
+
+/*
+    @GetMapping(value = "/imagesn/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] getImages(@PathVariable String id) throws IOException {
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedImage bufferedImage = imageService.loadFileAsResourceImage(id);
+        if (bufferedImage != null) {
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } else {
+            return new byte[0];
+        }
+    }
+*/
 
 }
