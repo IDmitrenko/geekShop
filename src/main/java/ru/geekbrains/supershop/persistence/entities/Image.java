@@ -16,13 +16,16 @@ import java.io.Serializable;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Image extends PersistableEntity implements Serializable {
 
     private static final long SUID = 1L;
 
     private String name;
+
+    public Image(String uploadedFileName) {
+        this.name = uploadedFileName;
+    }
 
 /*
     @ManyToOne

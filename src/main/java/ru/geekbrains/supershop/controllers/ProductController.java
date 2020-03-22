@@ -1,16 +1,13 @@
 package ru.geekbrains.supershop.controllers;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.multipart.MultipartFile;
 import ru.geekbrains.supershop.exceptions.ProductNotFoundException;
+import ru.geekbrains.supershop.exceptions.UploadingInvalidFileFormatException;
 import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.pojo.ProductPojo;
 import ru.geekbrains.supershop.services.ImageService;
@@ -18,11 +15,9 @@ import ru.geekbrains.supershop.services.ProductService;
 import ru.geekbrains.supershop.services.utils.CHelper;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 import java.util.UUID;
 
 @Controller
@@ -55,6 +50,14 @@ public class ProductController {
         } else {
             return new byte[0];
         }
+    }
+
+    @PostMapping
+    public String addProduct(@RequestParam("image") MultipartFile image,
+                         ProductPojo productPojo)
+            throws IOException, UploadingInvalidFileFormatException {
+        Image img = imageService.uploadImage(image, productPojo.getTitle());
+        return productService.save(productPojo, img);
     }
 
 /*
