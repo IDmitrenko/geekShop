@@ -65,7 +65,7 @@ public class ProductService {
                 .available(productPojo.isAvailable())
                 .category(productPojo.getCategory())
                 .image(image)
-                .build();
+            .build();
 
         productRepository.save(product);
         log.info("New Product has been succesfully added! {}", product);

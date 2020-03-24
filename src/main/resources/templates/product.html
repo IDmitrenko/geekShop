@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="EN">
 <head>
     <meta charset="utf-8"/>
     <title>SuperShop</title>
@@ -9,24 +10,53 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="card-title mt-2">Продукт [[ ${product.title} ]]</h2>
-    <div class="row justify-content-center">
-        <div class="col form-group">
-            <img th:if="${product.images.size() > 0}" width="100px" height="100px"
-                 th:src="@{'/products/image/' + ${product.id}}">
-            <label>Цена:</label>
-            <output type="number">[[ ${product.getPrice()} ]]</output>
-        </div>
-
-        <div class="form-row">
-            <div class="col form-group">
-                <label>Описание: </label>
-                <output> [[ ${product.description} ]]</output>
-            </div>
-        </div>
-
-    </div>
+    <h1>Product [[ ${product.title} ]]</h1>
 </div>
 
+<hr>
+<h2 style="text-align: center"> Отзывы о продукте</h2>
+<div class="container">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Текст отзыва</th>
+            <th>Пользователь</th>
+        </tr>
+        </thead>
+        <tbody th:if="${reviews.size() > 0}">
+        <tr th:each="review, iterator : ${reviews}">
+            <!--/*@thymesVar id="review" type="ru.geekbrains.supershop.persistence.entities.Review"*/-->
+            <td th:text="${iterator.index + 1}"></td>
+            <td th:text="${review.commentary}"></td>
+            <td>
+                <a th:href="@{'/profile/' + ${review.shopuser.id}}">[[ ${review.shopuser.firstName} ]]</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr>
+<div class="container" style="text-align: center" sec:authorize="isAuthenticated()">
+    <form action="#" th:action="@{/products/reviews}" method="POST">
+        <div class="form-row row justify-content-center">
+            <div class="form-group col-md-9">
+                <textarea class="form-control" name="commentary" rows="5" style="resize: none;" placeholder="Введите ваш отзыв"></textarea>
+            </div>
+        </div>
+        <div class="form-row row justify-content-center">
+            <div class="form-group col-md-3">
+                <input type="text" name="captchaCode" class="form-control" placeholder="Введите проверочный код">
+                <input type="hidden" name="productId" th:value="${product.id}">
+            </div>
+            <div class="form-group col-md-3">
+                <img class="captcha-pic" id="captcha" th:src="@{/captcha}" />
+            </div>
+            <div class="form-group col-md-3">
+                <button type="submit" class="btn btn-success">оставить отзыв</button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

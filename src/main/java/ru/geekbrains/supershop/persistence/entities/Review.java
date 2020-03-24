@@ -1,27 +1,28 @@
 package ru.geekbrains.supershop.persistence.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.geekbrains.supershop.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import java.io.Serializable;
-
 @Data
 @Entity
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Image extends PersistableEntity implements Serializable {
+public class Review extends PersistableEntity {
 
-    private static final long SUID = 1L;
+    private String commentary;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "shopuser")
+    private Shopuser shopuser;
+
+    @ManyToOne
+    @JoinColumn(name = "product")
+    private Product product;
 
 }

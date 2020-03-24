@@ -39,6 +39,9 @@ public class Product extends PersistableEntity {
     @JoinColumn(name = "image")
     private Image image;
 
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
+
 /*
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Image> images;

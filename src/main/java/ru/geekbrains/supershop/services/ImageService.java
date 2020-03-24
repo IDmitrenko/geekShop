@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.geekbrains.supershop.exceptions.UploadingInvalidFileFormatException;
+import ru.geekbrains.supershop.exceptions.UnsupportedMediaTypeException;
 import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.repositories.ImageRepository;
 import ru.geekbrains.supershop.utils.Validators;
@@ -18,9 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.UUID;
-
-import static ru.geekbrains.supershop.utils.FileExtension.isExtension;
 
 @Slf4j
 @Service
@@ -72,17 +72,35 @@ public class ImageService {
     }
 
     @Transactional
-    public Image uploadImage(MultipartFile image, String imageName) throws IOException, UploadingInvalidFileFormatException {
-        String fileExtension = image.getOriginalFilename().split("\\.")[1];
-//        Long fileSize = image.getSize();
-        if (isExtension(fileExtension)) {
-            String uploadedFileName = imageName + fileExtension;
+    public Image uploadImage(MultipartFile image, String imageName) throws IOException, UnsupportedMediaTypeException {
+//        String fileExtension = image.getOriginalFilename().split("\\.")[1];
+//        if (isExtension(fileExtension)) {
+        if (image.getBytes().length != 0) {
+            String uploadedFileName = imageName + "." + determineImageExtension(image);
             Path targetLocation = IMAGES_STORE_PATH.resolve(uploadedFileName);
             Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             log.info("File {} has been succesfully uploaded!", uploadedFileName);
             return imageRepository.save(new Image(uploadedFileName));
         } else {
-            throw new UploadingInvalidFileFormatException("Uploading an invalid file format");
+            return null;
+        }
+    }
+
+    private String determineImageExtension(MultipartFile image) throws UnsupportedMediaTypeException {
+
+        switch (Objects.requireNonNull(image.getContentType())) {
+
+            case MediaType.IMAGE_JPEG_VALUE:
+                return "jpeg";
+
+            case MediaType.IMAGE_PNG_VALUE:
+                return "png";
+
+            case MediaType.IMAGE_GIF_VALUE:
+                return "gif";
+
+            default:
+                throw new UnsupportedMediaTypeException("Error! This file is not supported!");
         }
     }
 
