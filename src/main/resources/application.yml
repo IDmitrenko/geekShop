@@ -13,3 +13,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
   thymeleaf:
     cache: false
+  servlet:
+    multipart:
+      max-file-size: 10000000     #10MB
+      max-request-size: 10000000  #10MB
+
+files:
+  storepath:
+    icons:  "E:\\GeekBrains\\geekshop\\uploads\\icons"
+    images: "E:\\GeekBrains\\geekshop\\uploads\\images"
