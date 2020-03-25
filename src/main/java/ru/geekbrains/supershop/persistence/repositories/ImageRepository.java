@@ -16,4 +16,7 @@ public interface ImageRepository extends JpaRepository<Image, UUID> {
 
     @Query(value = "SELECT image.name FROM image WHERE id = :id", nativeQuery = true)
     String obtainImageNameByImageId(@Param("id") UUID id);
+
+    @Query(value = "SELECT image.name FROM image INNER JOIN review r ON image.id = r.image WHERE r.id = :id", nativeQuery = true)
+    String obtainImageNameByReviewId(@Param("id") UUID id);
 }

@@ -39,6 +39,14 @@ public class ImageService {
         return imageRepository.obtainImageNameByProductId(id);
     }
 
+    private String getImage(UUID id) {
+        return imageRepository.obtainImageNameByImageId(id);
+    }
+
+    private String getImageForSpecificReview(UUID id) {
+        return imageRepository.obtainImageNameByReviewId(id);
+    }
+
     public BufferedImage loadFileAsResource(String id) {
         String imageName = null;
 
@@ -71,8 +79,39 @@ public class ImageService {
         }
     }
 
+    public BufferedImage loadFileAsResourceImage(String id) throws IOException {
+        String imageName = null;
+
+        try {
+            Path filePath;
+
+            if (Validators.isUUID(id)) {
+                imageName = getImageForSpecificReview(UUID.fromString(id));
+                if (imageName != null) {
+                    filePath = IMAGES_STORE_PATH.resolve(imageName).normalize();
+                } else {
+                    imageName = "image_not_found.png";
+                    filePath = ICONS_STORE_PATH.resolve(imageName).normalize();
+                }
+            } else {
+                imageName = "image_not_found.png";
+                filePath = ICONS_STORE_PATH.resolve(imageName).normalize();
+            }
+
+            if (filePath != null) {
+                return ImageIO.read(new UrlResource(filePath.toUri()).getFile());
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException ex) {
+            log.error("Error! Image {} file wasn't found!", imageName);
+            return null;
+        }
+    }
+
     @Transactional
-    public Image uploadImage(MultipartFile image, String imageName) throws IOException, UnsupportedMediaTypeException {
+    public Image uploadImage(MultipartFile image, String imageName)
+        throws IOException, UnsupportedMediaTypeException {
 //        String fileExtension = image.getOriginalFilename().split("\\.")[1];
 //        if (isExtension(fileExtension)) {
         if (image.getBytes().length != 0) {
@@ -127,10 +166,6 @@ public class ImageService {
 */
 
 /*2
-    private String getImage(UUID id) {
-        return imageRepository.obtainImageNameByImageId(id);
-    }
-
     public BufferedImage loadFileAsResourceImage(String id) throws IOException {
         try {
             String imageName = getImage(UUID.fromString(id));
