@@ -59,22 +59,19 @@ public class ProductController {
     public @ResponseBody
     byte[] getImage(@PathVariable String id) throws IOException {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = imageService.loadFileAsResource(id);
-        if (bufferedImage != null) {
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        } else {
-            return new byte[0];
-        }
+        return getBytes(id, false);
     }
 
     @GetMapping(value = "/reviews/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody
     byte[] getImageReview(@PathVariable String id) throws IOException {
 
+        return getBytes(id, true);
+    }
+
+    private byte[] getBytes(@PathVariable String id, boolean isImageReview) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = imageService.loadFileAsResourceImage(id);
+        BufferedImage bufferedImage = imageService.loadFileAsResource(id, isImageReview);
         if (bufferedImage != null) {
             ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
@@ -129,22 +126,6 @@ public class ProductController {
         } else {
             throw new WrongCaptchaCodeException("Error! Captcha code is incorrect! Please try again!");
         }
-
     }
-/*
-    @GetMapping(value = "/imagesn/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody
-    byte[] getImages(@PathVariable String id) throws IOException {
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = imageService.loadFileAsResourceImage(id);
-        if (bufferedImage != null) {
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        } else {
-            return new byte[0];
-        }
-    }
-*/
 
 }
