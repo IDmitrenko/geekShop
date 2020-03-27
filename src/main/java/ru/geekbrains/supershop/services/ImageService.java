@@ -39,7 +39,11 @@ public class ImageService {
         return imageRepository.obtainImageNameByProductId(id);
     }
 
-    public BufferedImage loadFileAsResource(String id) {
+    private String getImageForSpecificReview(UUID id) {
+        return imageRepository.obtainImageNameByReviewId(id);
+    }
+
+    public BufferedImage loadFileAsResource(String id, boolean isImageReview) {
         String imageName = null;
 
         try {
@@ -47,7 +51,9 @@ public class ImageService {
 
             if (Validators.isUUID(id)) {
 
-                imageName = getImageForSpecificProduct(UUID.fromString(id));
+
+                imageName = isImageReview ? getImageForSpecificReview(UUID.fromString(id)) :
+                                            getImageForSpecificProduct(UUID.fromString(id));
 
                 if (imageName != null) {
                     filePath = IMAGES_STORE_PATH.resolve(imageName).normalize();
@@ -71,8 +77,9 @@ public class ImageService {
         }
     }
 
-    @Transactional
-    public Image uploadImage(MultipartFile image, String imageName) throws IOException, UnsupportedMediaTypeException {
+        @Transactional
+    public Image uploadImage(MultipartFile image, String imageName)
+        throws IOException, UnsupportedMediaTypeException {
 //        String fileExtension = image.getOriginalFilename().split("\\.")[1];
 //        if (isExtension(fileExtension)) {
         if (image.getBytes().length != 0) {

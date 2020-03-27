@@ -13,6 +13,7 @@ import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.entities.Product;
 import ru.geekbrains.supershop.persistence.entities.Review;
 import ru.geekbrains.supershop.persistence.entities.Shopuser;
+import ru.geekbrains.supershop.persistence.entities.enums.Role;
 import ru.geekbrains.supershop.persistence.pojo.ProductPojo;
 import ru.geekbrains.supershop.persistence.pojo.ReviewPojo;
 import ru.geekbrains.supershop.services.ImageService;
@@ -58,14 +59,35 @@ public class ProductController {
     public @ResponseBody
     byte[] getImage(@PathVariable String id) throws IOException {
 
+        return getBytes(id, false);
+    }
+
+    @GetMapping(value = "/reviews/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] getImageReview(@PathVariable String id) throws IOException {
+
+        return getBytes(id, true);
+    }
+
+    private byte[] getBytes(@PathVariable String id, boolean isImageReview) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = imageService.loadFileAsResource(id);
+        BufferedImage bufferedImage = imageService.loadFileAsResource(id, isImageReview);
         if (bufferedImage != null) {
             ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } else {
             return new byte[0];
         }
+    }
+
+    @GetMapping("/reviews/{id}")
+    public String approvedReview(@PathVariable(value = "id") UUID id) {
+        Review review = reviewService.getReviewById(id).orElse(null);
+        if (review != null) {
+            review.setApproved(true);
+            reviewService.save(review);
+        }
+        return "redirect:/products/" + review.getProduct().getId();
     }
 
     @PostMapping
@@ -77,18 +99,24 @@ public class ProductController {
     }
 
     @PostMapping("/reviews")
-    public String addReview(ReviewPojo reviewPojo, HttpSession session, Principal principal)
-            throws ProductNotFoundException, WrongCaptchaCodeException {
+    public String addReview(@RequestParam("image") MultipartFile image,
+                            ReviewPojo reviewPojo, HttpSession session, Principal principal)
+            throws ProductNotFoundException, WrongCaptchaCodeException,
+                   IOException, UnsupportedMediaTypeException {
 
         if (reviewPojo.getCaptchaCode().equals(session.getAttribute("captchaCode"))) {
 
             Product product = productService.findOneById(reviewPojo.getProductId());
             Shopuser shopuser = shopuserService.findByPhone(principal.getName());
+            Boolean approved = shopuser.getRole().equals(Role.ROLE_ADMIN);
+            Image img = imageService.uploadImage(image, principal.getName() + "_" + reviewPojo.getProductId());
 
             Review review = Review.builder()
                     .commentary(reviewPojo.getCommentary())
                     .product(product)
                     .shopuser(shopuser)
+                    .approved(approved)
+                    .image(img)
                     .build();
 
             reviewService.save(review);
@@ -98,22 +126,6 @@ public class ProductController {
         } else {
             throw new WrongCaptchaCodeException("Error! Captcha code is incorrect! Please try again!");
         }
-
     }
-/*
-    @GetMapping(value = "/imagesn/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody
-    byte[] getImages(@PathVariable String id) throws IOException {
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = imageService.loadFileAsResourceImage(id);
-        if (bufferedImage != null) {
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        } else {
-            return new byte[0];
-        }
-    }
-*/
 
 }
