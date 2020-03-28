@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ru.geekbrains.supershop.beans.Cart;
 import ru.geekbrains.supershop.services.ProductService;
+import ru.geekbrains.supershop.services.soap.PaymentService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class CartController {
 
     private final Cart cart;
+    private final PaymentService paymentService;
     private final ProductService productService;
 
     @GetMapping("/add/{id}")
@@ -41,6 +43,7 @@ public class CartController {
     @GetMapping
     public String showCart(Model model) {
         model.addAttribute("cart", cart);
+        model.addAttribute("payments", paymentService.getPayments("Russia"));
         return "cart";
     }
 

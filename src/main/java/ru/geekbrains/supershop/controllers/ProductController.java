@@ -59,15 +59,24 @@ public class ProductController {
     public @ResponseBody
     byte[] getImage(@PathVariable String id) throws IOException {
 
-        return getBytes(id, false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedImage bufferedImage = imageService.loadFileAsResource(id, false);
+        if (bufferedImage != null) {
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } else {
+            return new byte[0];
+        }
     }
 
+/*
     @GetMapping(value = "/reviews/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody
     byte[] getImageReview(@PathVariable String id) throws IOException {
 
         return getBytes(id, true);
     }
+
 
     private byte[] getBytes(@PathVariable String id, boolean isImageReview) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -89,6 +98,7 @@ public class ProductController {
         }
         return "redirect:/products/" + review.getProduct().getId();
     }
+*/
 
     @PostMapping
     public String addProduct(@RequestParam("image") MultipartFile image,
@@ -104,7 +114,7 @@ public class ProductController {
             throws ProductNotFoundException, WrongCaptchaCodeException,
                    IOException, UnsupportedMediaTypeException {
 
-        if (reviewPojo.getCaptchaCode().equals(session.getAttribute("captchaCode"))) {
+//        if (reviewPojo.getCaptchaCode().equals(session.getAttribute("captchaCode"))) {
 
             Product product = productService.findOneById(reviewPojo.getProductId());
             Shopuser shopuser = shopuserService.findByPhone(principal.getName());
@@ -123,9 +133,9 @@ public class ProductController {
 
             return "redirect:/products/" + product.getId();
 
-        } else {
-            throw new WrongCaptchaCodeException("Error! Captcha code is incorrect! Please try again!");
-        }
+//        } else {
+//            throw new WrongCaptchaCodeException("Error! Captcha code is incorrect! Please try again!");
+//        }
     }
 
 }

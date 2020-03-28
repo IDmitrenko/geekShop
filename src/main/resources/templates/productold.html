@@ -23,39 +23,28 @@
             <th>Текст отзыва</th>
             <th>Фото с оценкой</th>
             <th>Пользователь</th>
-            <div sec:authorize="hasRole('ADMIN')">
-                <th>Опции</th>
-            </div>
         </tr>
         </thead>
+
         <tbody th:if="${reviews.size() > 0}">
-        <tr th:each="review, iterator : ${reviews}">
-            <!--/*@thymesVar id="review" type="ru.geekbrains.supershop.persistence.entities.Review"*/-->
+        <tr th:if="${review.getApproved()
+                    or #authorization.expression('hasRole(''ADMIN'')')
+                    or #authentication.getName().equals(review.getShopuser().getPhone())}"
+            th:each="review, iterator : ${reviews}">
+            &lt;!&ndash;/*@thymesVar id="review" type="ru.geekbrains.supershop.persistence.entities.Review"*/&ndash;&gt;
             <td th:text="${iterator.index + 1}"></td>
-            <div sec:authorize="!hasRole('ADMIN')">
-                <td th:text="${review.approved} ? ${review.commentary} : 'Комментарий на модерации!'"}
-                    th:style="${review.approved ? 'color:black' : 'color:#c1c1c1'}">
-                </td>
-            </div>
-            <div sec:authorize="hasRole('ADMIN')">
-                <td th:text="${review.commentary}"}></td>
-            </div>
+            <td th:text="${review.commentary}"></td>
             <td>
                 <div>
-                    <img th:src="@{'/reviews/images/' + ${review.id}}" alt="" width="50px" height="50px" />
+                    <img th:src="@{'/products/reviews/images/' + ${review.id}}" alt="" width="50px" height="50px" />
                 </div>
             </td>
             <td>
                 <a th:href="@{'/profile/' + ${review.shopuser.id}}">[[ ${review.shopuser.firstName} ]]</a>
             </td>
-            <div sec:authorize="hasRole('ADMIN')">
-                <td th:unless="${review.approved}">
-                    <a th:href="@{'/reviews/' + ${review.id} + '/?option=approve'}" class="btn btn-warning">Одобрить</a>
-                </td>
-                <td th:if="${review.approved}">
-                    <a th:href="@{'/reviews/' + ${review.id} + '/?option=decline'}" class="btn btn-danger">Отклонить</a>
-                </td>
-            </div>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:if="${!review.getApproved()}" th:href="@{'/products/reviews/' + ${review.id}}" class="btn btn-primary">Одобрить</a>
+            </td>
         </tr>
         </tbody>
 

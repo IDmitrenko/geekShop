@@ -3,6 +3,7 @@ package ru.geekbrains.supershop.services;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+//import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -71,4 +72,11 @@ public class ProductService {
         log.info("New Product has been succesfully added! {}", product);
         return "redirect:/";
     }
+
+/*
+    @EventListener
+    public void myListener(SuperShopEvent event) {
+
+    }
+*/
 }

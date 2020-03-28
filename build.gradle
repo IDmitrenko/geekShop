@@ -2,7 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'no.nils.wsdl2java' version '0.10'
 }
+
+apply plugin: 'no.nils.wsdl2java'
 
 configurations {
 	compile.exclude module: "spring-boot-starter-tomcat"
@@ -43,6 +46,20 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
+
+wsdl2javaExt {
+	cxfVersion = "3.1.10"
+}
+
+wsdl2java{
+	generatedWsdlDir = file("${projectDir}/src/main/script_generated")
+	wsdlDir=file("${projectDir}/src/main/resources/META-INF/wsdl/")
+	wsdlsToGenerate = [
+			[ file("${projectDir}/src/main/resources/META-INF/wsdl/payment/WsPayment.wsdl") ]
+	]
+}
+
+compileJava.dependsOn wsdl2java
 
 test {
 	useJUnitPlatform()

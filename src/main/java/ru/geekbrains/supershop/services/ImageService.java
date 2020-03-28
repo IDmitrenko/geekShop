@@ -3,6 +3,7 @@ package ru.geekbrains.supershop.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageService {
 
+/*
+    private final ApplicationEventPublisher applicationEventPublisher;
+*/
+
     @Value("${files.storepath.images}")
     private Path IMAGES_STORE_PATH;
 
@@ -44,6 +49,11 @@ public class ImageService {
     }
 
     public BufferedImage loadFileAsResource(String id, boolean isImageReview) {
+
+/*
+        applicationEventPublisher.publishEvent(new SuperShopEvent(this, UUID.randomUUID()));
+*/
+
         String imageName = null;
 
         try {

@@ -35,7 +35,25 @@
             </tbody>
         </table>
         <span th:text="'Общая стоимость: ' + ${cart.price}" />
+
+        <div class="row" th:if="${payments.size() > 0}">
+            <div class="col-sm">
+                Выберите способ оплаты:
+                <label>
+                    <select id="payment" name="payment">
+                        <option th:each="payment : ${payments}"
+                                th:value="${payment.name}"
+                                th:text="${payment.name}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row" th:if="${payments.size() == 0}">
+            <div>К сожалению сервис оплаты временно недоступен! Попробуйте оплатить позднее! </div>
+        </div>
     </div>
+
     <div th:if="${cart.cartRecords.size() == 0}">
         <span text="Ваша корзина пуста" />
     </div>

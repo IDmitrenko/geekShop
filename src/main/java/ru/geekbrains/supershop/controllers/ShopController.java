@@ -45,14 +45,10 @@ public class ShopController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(Model model, @CookieValue(value = "data", required = false) String data, Principal principal) {
+    public String adminPage(Model model, Principal principal) {
 
         if (principal == null) {
             return "redirect:/";
-        }
-
-        if (data != null) {
-            System.out.println(data);
         }
 
         model.addAttribute("products", productService.findAll(null, null));
@@ -61,7 +57,7 @@ public class ShopController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Model model, @CookieValue(value = "data", required = false) String data, Principal principal) {
+    public String profilePage(Model model, Principal principal) {
 
         if (principal == null) {
             return "redirect:/";
@@ -71,10 +67,6 @@ public class ShopController {
 
         model.addAttribute("reviews", reviewService.getReviewsByShopuser(shopuser).orElse(new ArrayList<>()));
         model.addAttribute("shopuser", shopuser);
-
-        if (data != null) {
-            System.out.println(data);
-        }
 
         return "profile";
     }

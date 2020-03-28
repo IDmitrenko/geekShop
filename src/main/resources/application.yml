@@ -1,4 +1,5 @@
 server:
+  port: 8084
   servlet:
     context-path: /supershop
 
@@ -22,5 +23,7 @@ spring:
 
 files:
   storepath:
-    icons:  "E:\\GeekBrains\\geekshop\\uploads\\icons"
-    images: "E:\\GeekBrains\\geekshop\\uploads\\images"
+    icons:  "C:\\Java\\uploads\\icons"
+    images: "C:\\Java\\uploads\\images"
+#  icons:  "E:\\GeekBrains\\geekshop\\uploads\\icons"
+#  images: "E:\\GeekBrains\\geekshop\\uploads\\images"
