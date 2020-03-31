@@ -1,5 +1,7 @@
 package ru.geekbrains.supershop.persistence.entities;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,10 +20,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(description = "Entity-класс для хранения изображения.")
 public class Image extends PersistableEntity implements Serializable {
 
     private static final long SUID = 1L;
 
+    @ApiModelProperty(required = true, value = "Название фотографии.")
     private String name;
 
 }

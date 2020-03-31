@@ -8,19 +8,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for payment complex type.
+ * <p>Java class for product complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="payment"&gt;
+ * &lt;complexType name="product"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="fee" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,20 +29,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "payment", propOrder = {
+@XmlType(name = "product", propOrder = {
     "id",
     "name",
-    "country",
-    "fee"
+    "price"
 })
-public class Payment {
+public class Product {
 
     protected int id;
     @XmlElement(required = true)
     protected String name;
-    @XmlElement(required = true)
-    protected String country;
-    protected int fee;
+    protected int price;
 
     /**
      * Gets the value of the id property.
@@ -86,43 +82,19 @@ public class Payment {
     }
 
     /**
-     * Gets the value of the country property.
+     * Gets the value of the price property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getCountry() {
-        return country;
+    public int getPrice() {
+        return price;
     }
 
     /**
-     * Sets the value of the country property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCountry(String value) {
-        this.country = value;
-    }
-
-    /**
-     * Gets the value of the fee property.
+     * Sets the value of the price property.
      * 
      */
-    public int getFee() {
-        return fee;
-    }
-
-    /**
-     * Sets the value of the fee property.
-     * 
-     */
-    public void setFee(int value) {
-        this.fee = value;
+    public void setPrice(int value) {
+        this.price = value;
     }
 
 }

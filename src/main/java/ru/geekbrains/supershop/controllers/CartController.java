@@ -23,7 +23,7 @@ import java.util.UUID;
 public class CartController {
 
     private final Cart cart;
-    private final PaymentService paymentService;
+//    private final PaymentService paymentService;
     private final ProductService productService;
 
     @GetMapping("/add/{id}")
@@ -43,7 +43,7 @@ public class CartController {
     @GetMapping
     public String showCart(Model model) {
         model.addAttribute("cart", cart);
-        model.addAttribute("payments", paymentService.getPayments("Russia"));
+//        model.addAttribute("payments", paymentService.getPayments("Russia"));
         return "cart";
     }
 

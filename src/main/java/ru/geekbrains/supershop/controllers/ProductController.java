@@ -1,11 +1,13 @@
 package ru.geekbrains.supershop.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.geekbrains.supershop.exceptions.EntityNotFoundException;
 import ru.geekbrains.supershop.exceptions.ProductNotFoundException;
 import ru.geekbrains.supershop.exceptions.UnsupportedMediaTypeException;
 import ru.geekbrains.supershop.exceptions.WrongCaptchaCodeException;
@@ -42,8 +44,9 @@ public class ProductController {
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
 
+    @ApiOperation(value = "Получить страницу с данными продукта.", response = String.class)
     @GetMapping("/{id}")
-    public String getOneProduct(Model model, @PathVariable String id) throws ProductNotFoundException {
+    public String getOneProduct(Model model, @PathVariable String id) throws EntityNotFoundException {
 
 //        if (CHelper.parseUUIDString(id)) {
         Product product = productService.findOneById(UUID.fromString(id));
@@ -55,6 +58,7 @@ public class ProductController {
 //        return "redirect:/";
     }
 
+    @ApiOperation(value = "Загрузка изображения.", response = String.class)
     @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody
     byte[] getImage(@PathVariable String id) throws IOException {
@@ -100,6 +104,7 @@ public class ProductController {
     }
 */
 
+    @ApiOperation(value = "Добавить новый продукт на витрину.", response = String.class)
     @PostMapping
     public String addProduct(@RequestParam("image") MultipartFile image,
                          ProductPojo productPojo)
@@ -108,10 +113,11 @@ public class ProductController {
         return productService.save(productPojo, img);
     }
 
+    @ApiOperation(value = "Добавить новый отзыв о продукте.", response = String.class)
     @PostMapping("/reviews")
     public String addReview(@RequestParam("image") MultipartFile image,
                             ReviewPojo reviewPojo, HttpSession session, Principal principal)
-            throws ProductNotFoundException, WrongCaptchaCodeException,
+            throws EntityNotFoundException, WrongCaptchaCodeException,
                    IOException, UnsupportedMediaTypeException {
 
 //        if (reviewPojo.getCaptchaCode().equals(session.getAttribute("captchaCode"))) {

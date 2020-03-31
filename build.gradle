@@ -18,6 +18,8 @@ repositories {
 	mavenCentral()
 }
 
+def swaggerVersion = '2.8.0'
+
 dependencies {
 
 //	compile 'org.springframework.boot:spring-boot-starter-undertow'
@@ -45,6 +47,11 @@ dependencies {
 	testImplementation 'com.h2database:h2:1.4.197'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	implementation "io.springfox:springfox-bean-validators:${swaggerVersion}"
+	implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+	implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+
+	implementation "org.springframework.boot:spring-boot-starter-amqp"
 }
 
 wsdl2javaExt {

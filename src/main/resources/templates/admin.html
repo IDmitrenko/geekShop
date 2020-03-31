@@ -18,6 +18,7 @@
 
         <form action="#" th:action="@{/products}" method="POST" enctype="multipart/form-data">
             <div class="form-row">
+<!--
                 <div class="row" th:if="${productsprice.size() > 0}">
                     <div class="col-sm">
                         Выберите продукт:
@@ -34,6 +35,7 @@
                 <div class="row" th:if="${productsprice.size() == 0}">
                     <div>К сожалению сервис оплаты временно недоступен! Попробуйте оплатить позднее! </div>
                 </div>
+-->
                 <div class="form-group col-md-3">
                     <input type="text" name="title" class="form-control" placeholder="Наименование">
                 </div>

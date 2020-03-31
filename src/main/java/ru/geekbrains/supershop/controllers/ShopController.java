@@ -5,11 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
+import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
 import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.services.ProductService;
@@ -17,6 +15,7 @@ import ru.geekbrains.supershop.services.ReviewService;
 import ru.geekbrains.supershop.services.ShopuserService;
 import ru.geekbrains.supershop.services.soap.PriceService;
 import ru.geekbrains.supershop.utils.CaptchaGenerator;
+import ru.geekbrains.supershop.utils.Validators;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,7 @@ public class ShopController {
     private final ProductService productService;
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
-    private final PriceService priceService;
+//    private final PriceService priceService;
 
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index(Model model,
@@ -54,7 +53,7 @@ public class ShopController {
         }
 
         model.addAttribute("products", productService.findAll(null, null));
-        model.addAttribute("productsprice", priceService.getProducts(100));
+//        model.addAttribute("productsprice", priceService.getProducts(100));
 
         return "admin";
     }
@@ -75,8 +74,7 @@ public class ShopController {
     }
 
     @GetMapping(value = "/captcha", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody
-    byte[] captcha(HttpSession session) {
+    public @ResponseBody byte[] captcha(HttpSession session) {
         try {
             BufferedImage img = captchaGenerator.getCaptchaImage();
             session.setAttribute("captchaCode", captchaGenerator.getCaptchaString());
@@ -86,5 +84,21 @@ public class ShopController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/checkout")
+    public String proceedToCheckout(String paymentId, Model model) {
+
+        Payment payment = cart.getPayments()
+                .stream()
+                .filter(p -> p.getId() == Integer.valueOf(paymentId))
+                .collect(Validators.toSingleton());
+
+        cart.setPayment(payment);
+
+        model.addAttribute("cart", cart);
+
+        return "checkout";
+
     }
 }

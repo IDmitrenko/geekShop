@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.persistence.entities.CartRecord;
 import ru.geekbrains.supershop.persistence.entities.Product;
+import ru.geekbrains.supershop.services.soap.PaymentService;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
@@ -19,14 +21,19 @@ import java.util.UUID;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Cart implements Serializable {
 
+    private final PaymentService paymentService;
+
     private static final long serialVersionUID = 1L;
 
     private List<CartRecord> cartRecords;
+    private List<Payment> payments;
     private Double price;
+    private Payment payment;
 
     @PostConstruct
     public void init() {
         cartRecords = new ArrayList<>();
+        payments = paymentService.getPayments("Russia");
     }
 
     public void clear() {

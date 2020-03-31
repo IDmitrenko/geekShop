@@ -38,6 +38,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetProductRequest }
+     * 
+     */
+    public GetProductRequest createGetProductRequest() {
+        return new GetProductRequest();
+    }
+
+    /**
      * Create an instance of {@link GetPaymentResponse }
      * 
      */
@@ -51,6 +59,22 @@ public class ObjectFactory {
      */
     public Payment createPayment() {
         return new Payment();
+    }
+
+    /**
+     * Create an instance of {@link GetProductResponse }
+     * 
+     */
+    public GetProductResponse createGetProductResponse() {
+        return new GetProductResponse();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     * 
+     */
+    public Product createProduct() {
+        return new Product();
     }
 
 }

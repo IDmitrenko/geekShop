@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.geekbrains.supershop.exceptions.ProductNotFoundException;
+import ru.geekbrains.supershop.exceptions.EntityNotFoundException;
 import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.entities.Product;
 import ru.geekbrains.supershop.persistence.entities.enums.ProductCategory;
@@ -26,9 +26,9 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product findOneById(UUID uuid) throws ProductNotFoundException {
+    public Product findOneById(UUID uuid) throws EntityNotFoundException {
         return productRepository.findById(uuid).orElseThrow(
-            () -> new ProductNotFoundException("Oops! Product " + uuid + " wasn't found!")
+            () -> new EntityNotFoundException("Oops! Product " + uuid + " wasn't found!")
         );
     }
 
