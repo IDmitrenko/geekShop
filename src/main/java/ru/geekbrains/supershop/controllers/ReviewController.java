@@ -1,5 +1,7 @@
 package ru.geekbrains.supershop.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
@@ -20,17 +22,20 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
+@Api(value = "Набор методов для отзывов по товарам")
 public class ReviewController {
 
     private final ReviewService reviewService;
     private final ImageService imageService;
 
+    @ApiOperation(value = "Модерация отзыва о продукте админом.", response = String.class)
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String moderateReview(@PathVariable UUID id, @RequestParam String option) throws EntityNotFoundException {
         return "redirect:/products/" + reviewService.moderate(id, option);
     }
 
+    @ApiOperation(value = "Загрузка картинки с оценкой продукта.", response = String.class)
     @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody
     byte[] getImageReview(@PathVariable String id) throws IOException {
