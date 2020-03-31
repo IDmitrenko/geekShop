@@ -15,6 +15,7 @@ import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.services.ProductService;
 import ru.geekbrains.supershop.services.ReviewService;
 import ru.geekbrains.supershop.services.ShopuserService;
+import ru.geekbrains.supershop.services.soap.PriceService;
 import ru.geekbrains.supershop.utils.CaptchaGenerator;
 
 import javax.imageio.ImageIO;
@@ -34,6 +35,7 @@ public class ShopController {
     private final ProductService productService;
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
+    private final PriceService priceService;
 
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index(Model model,
@@ -52,6 +54,7 @@ public class ShopController {
         }
 
         model.addAttribute("products", productService.findAll(null, null));
+        model.addAttribute("productsprice", priceService.getProducts(100));
 
         return "admin";
     }
