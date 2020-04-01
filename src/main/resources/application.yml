@@ -36,5 +36,5 @@ files:
 supershop:
   rabbitmq:
     exchange:   super-shop.exchange
-    routingkey: super.shop
+    routingkey: super-shop
     queue:      super-shop.queue

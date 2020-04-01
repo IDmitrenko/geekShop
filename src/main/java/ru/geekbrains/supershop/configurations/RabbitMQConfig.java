@@ -28,12 +28,12 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    Queue queue() {
+    public Queue queue() {
         return new Queue(QUEUE, true, false, false);
     }
 
     @Bean
-    Binding binding() {
+    public Binding binding() {
         return BindingBuilder.bind(queue()).to(exchange()).with(ROUTING_KEY);
     }
 
