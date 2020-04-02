@@ -1,5 +1,7 @@
 package ru.geekbrains.supershop.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
+@Api(value = "ShopController", description = "Набор сервисных методов")
 public class ShopController {
 
     private final Cart cart;
@@ -36,6 +39,7 @@ public class ShopController {
     private final ShopuserService shopuserService;
 //    private final PriceService priceService;
 
+    @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index(Model model,
                         @RequestParam(required = false) Integer category,
@@ -45,6 +49,7 @@ public class ShopController {
         return "index";
     }
 
+    @ApiOperation(value = "Cтраница Администратора.", response = String.class)
     @GetMapping("/admin")
     public String adminPage(Model model, Principal principal) {
 
@@ -58,6 +63,7 @@ public class ShopController {
         return "admin";
     }
 
+    @ApiOperation(value = "Страница с данными аутентифицированного пользователя.", response = String.class)
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
 
@@ -73,6 +79,7 @@ public class ShopController {
         return "profile";
     }
 
+    @ApiOperation(value = "Получить captcha.", response = String.class)
     @GetMapping(value = "/captcha", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] captcha(HttpSession session) {
         try {
@@ -86,6 +93,7 @@ public class ShopController {
         }
     }
 
+    @ApiOperation(value = "Выбор системы оплаты.", response = String.class)
     @PostMapping("/checkout")
     public String proceedToCheckout(String paymentId, Model model) {
 

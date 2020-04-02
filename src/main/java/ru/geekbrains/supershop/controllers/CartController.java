@@ -1,5 +1,7 @@
 package ru.geekbrains.supershop.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,14 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/cart")
 @RequiredArgsConstructor
+@Api(value = "CartController", description = "Набор методов для работы с корзиной заказов")
 public class CartController {
 
     private final Cart cart;
 //    private final PaymentService paymentService;
     private final ProductService productService;
 
+    @ApiOperation(value = "Добавить продукт в корзину.", response = String.class)
     @GetMapping("/add/{id}")
     public void addProductToCart(@PathVariable UUID id,
                                  HttpServletRequest request,
@@ -34,12 +38,14 @@ public class CartController {
         response.sendRedirect(request.getHeader("referer"));
     }
 
+    @ApiOperation(value = "Удалить продукт из корзины.", response = String.class)
     @GetMapping("/remove/{id}")
     public String removeProductFromCart(@PathVariable UUID id) {
         cart.removeByProductId(id);
         return "redirect:/cart";
     }
 
+    @ApiOperation(value = "Показать корзину.", response = String.class)
     @GetMapping
     public String showCart(Model model) {
         model.addAttribute("cart", cart);

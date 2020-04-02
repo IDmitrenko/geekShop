@@ -3,9 +3,13 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id 'no.nils.wsdl2java' version '0.10'
+	id "com.google.cloud.tools.jib" version "1.8.0"
 }
 
+apply plugin: 'com.google.cloud.tools.jib'
 apply plugin: 'no.nils.wsdl2java'
+
+apply from: 'gradle/jib.gradle'
 
 configurations {
 	compile.exclude module: "spring-boot-starter-tomcat"

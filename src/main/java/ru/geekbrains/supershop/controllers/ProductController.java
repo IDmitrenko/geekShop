@@ -1,7 +1,9 @@
 package ru.geekbrains.supershop.controllers;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,10 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/products")
+@Api(value = "ProductController", description = "Набор методов для витрины магазина")
 public class ProductController {
+
+    private final AmqpTemplate amqpTemplate;
 
     private final ImageService imageService;
     private final ProductService productService;
@@ -134,6 +139,9 @@ public class ProductController {
                     .approved(approved)
                     .image(img)
                     .build();
+
+            amqpTemplate.convertAndSend("super-shop.exchange", "super-shop",
+                    "User " + shopuser.getPhone() + " has left the review!");
 
             reviewService.save(review);
 

@@ -20,7 +20,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "Entity-класс для хранения изображения.")
+@ApiModel(value = "Image", description = "Entity-класс для хранения изображения.")
 public class Image extends PersistableEntity implements Serializable {
 
     private static final long SUID = 1L;
