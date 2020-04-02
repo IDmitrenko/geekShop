@@ -22,7 +22,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
-@Api(value = "Набор методов для отзывов по товарам")
+@Api(value = "ReviewController", description = "Набор методов для отзывов по товарам")
 public class ReviewController {
 
     private final ReviewService reviewService;

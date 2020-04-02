@@ -22,7 +22,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/cart")
 @RequiredArgsConstructor
-@Api(value = "Набор методов для работы с корзиной заказов")
+@Api(value = "CartController", description = "Набор методов для работы с корзиной заказов")
 public class CartController {
 
     private final Cart cart;

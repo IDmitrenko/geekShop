@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
-@Api(value = "Набор сервисных методов")
+@Api(value = "ShopController", description = "Набор сервисных методов")
 public class ShopController {
 
     private final Cart cart;

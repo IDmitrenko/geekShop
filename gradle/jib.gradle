@@ -1,0 +1,19 @@
+jib {
+    from {
+        image = "dockette/jdk8"
+//        image = "tomcat:8.5.53-jdk8-openjdk"
+//        image = "postgres:10"
+    }
+    to {
+        image = 'localhost:5000/supershop/demo'
+        tags = ['0.0.1']
+    }
+    container {
+        jvmFlags = ['-Xms1024m', '-Xdebug']
+        mainClass = "ru.geekbrains.supershop.ShopApplication"
+        ports = ['8084/tcp']
+    }
+}
+
+//jib.to.image = "dias1964/${rootProject.name}"
+jib.to.image = "dias1964/supershop"

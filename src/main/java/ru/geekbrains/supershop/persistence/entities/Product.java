@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "Entity-класс для единицы продукции.")
+@ApiModel(value = "Product", description = "Entity-класс для единицы продукции.")
 public class Product extends PersistableEntity {
 
     @ApiModelProperty(required = true, value = "Название продукта")
