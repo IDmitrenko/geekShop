@@ -49,8 +49,10 @@ public class Product extends PersistableEntity {
     @ApiModelProperty(reference = "Image", value = "Фотография продукта")
     private Image image;
 
+/* Такого поля в БД нет. Из-за него циклическая зависимость
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
+*/
 
 /*
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

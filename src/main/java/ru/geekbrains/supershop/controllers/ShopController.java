@@ -4,16 +4,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
+import ru.geekbrains.supershop.persistence.entities.Review;
 import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.services.ProductService;
 import ru.geekbrains.supershop.services.ReviewService;
@@ -29,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -122,5 +122,16 @@ public class ShopController {
     @GetMapping("/superflyer")
     public ResponseEntity<byte[]> getFlyerPDF() throws IOException {
         return shopFeignClient.getFlyer();
+    }
+
+    @GetMapping(value = "/rev/{phone}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Review>> getReviews(@PathVariable String phone ) {
+        return new ResponseEntity<>(reviewService.getReviews(phone, null), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/reviewp/{phone}/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Review>> getReviewsProduct(@PathVariable String phone,
+                                                          @PathVariable String title) {
+        return new ResponseEntity<>(reviewService.getReviewsProduct(phone, title), HttpStatus.OK);
     }
 }

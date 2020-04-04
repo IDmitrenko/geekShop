@@ -39,10 +39,12 @@ public class Shopuser extends PersistableEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+/* Обратные ссылки не нужны, так как из-за них получаются циклические зависимости
     @OneToMany(mappedBy = "shopuser")
     private List<Purchase> purchases;
 
     @OneToMany(mappedBy = "shopuser")
     private List<Review> reviews;
+*/
 
 }
