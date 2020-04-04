@@ -10,10 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.supershop.exceptions.EntityNotFoundException;
 import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.entities.Product;
+import ru.geekbrains.supershop.persistence.entities.Review;
+import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.persistence.entities.enums.ProductCategory;
 import ru.geekbrains.supershop.persistence.pojo.ProductPojo;
 import ru.geekbrains.supershop.persistence.repositories.ProductRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,11 +29,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductService {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private final ProductRepository productRepository;
 
     public Product findOneById(UUID uuid) throws EntityNotFoundException {
         return productRepository.findById(uuid).orElseThrow(
-            () -> new EntityNotFoundException("Oops! Product " + uuid + " wasn't found!")
+                () -> new EntityNotFoundException("Oops! Product " + uuid + " wasn't found!")
         );
     }
 
@@ -55,6 +63,31 @@ public class ProductService {
 */
     }
 
+    public List<Product> getAvailableProductsByCategory(Integer category, Boolean available) {
+        if (available == null && category == null) {
+            return productRepository.findAll();
+        }
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+// Обозначаем сущность, которая первостепенно выбирается
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+// Обозначаем корневую сущность на которую будет идти запрос
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (category != null) {
+            predicates.add(criteriaBuilder.equal(root.get("category"), ProductCategory.values()[category]));
+        }
+        if (available != null) {
+            predicates.add(criteriaBuilder.equal(root.get("available"), available));
+        }
+
+        criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[]{})));
+
+        List<Product> productList = entityManager.createQuery(criteriaQuery).getResultList();
+
+        return productList;
+    }
+
     @Transactional
     public String save(ProductPojo productPojo, Image image) {
 
@@ -66,7 +99,7 @@ public class ProductService {
                 .available(productPojo.isAvailable())
                 .category(productPojo.getCategory())
                 .image(image)
-            .build();
+                .build();
 
         productRepository.save(product);
         log.info("New Product has been succesfully added! {}", product);
