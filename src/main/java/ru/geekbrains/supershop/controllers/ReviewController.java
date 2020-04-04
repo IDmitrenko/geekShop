@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.supershop.exceptions.EntityNotFoundException;
 import ru.geekbrains.supershop.services.ImageService;
 import ru.geekbrains.supershop.services.ReviewService;
+import ru.geekbrains.supershop.services.feign.clients.ShopFeignClient;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,8 +27,14 @@ import java.util.UUID;
 @Api(value = "ReviewController", description = "Набор методов для отзывов по товарам")
 public class ReviewController {
 
+    private final ShopFeignClient shopFeignClient;
     private final ReviewService reviewService;
     private final ImageService imageService;
+
+    @GetMapping("/flyer")
+    public ResponseEntity<byte[]> getFlyer() {
+        return shopFeignClient.getFlyer();
+    }
 
     @ApiOperation(value = "Модерация отзыва о продукте админом.", response = String.class)
     @GetMapping("/{id}")

@@ -3,19 +3,22 @@ package ru.geekbrains.supershop.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
 import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.services.ProductService;
 import ru.geekbrains.supershop.services.ReviewService;
 import ru.geekbrains.supershop.services.ShopuserService;
-import ru.geekbrains.supershop.services.soap.PriceService;
+import ru.geekbrains.supershop.services.feign.clients.ShopFeignClient;
 import ru.geekbrains.supershop.utils.CaptchaGenerator;
 import ru.geekbrains.supershop.utils.Validators;
 
@@ -32,11 +35,16 @@ import java.util.ArrayList;
 @Api(value = "ShopController", description = "Набор сервисных методов")
 public class ShopController {
 
+    @Value("${supershop.city}")
+    // Берем properties с конфиг-сервера
+    private String cityName;
+
     private final Cart cart;
     private final CaptchaGenerator captchaGenerator;
     private final ProductService productService;
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
+    private final ShopFeignClient shopFeignClient;
 //    private final PriceService priceService;
 
     @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
@@ -44,6 +52,7 @@ public class ShopController {
     public String index(Model model,
                         @RequestParam(required = false) Integer category,
                         @RequestParam(required = false) Boolean available) {
+        model.addAttribute("city", cityName);
         model.addAttribute("cart", cart.getCartRecords());
         model.addAttribute("products", productService.findAll(available, category));
         return "index";
@@ -108,5 +117,10 @@ public class ShopController {
 
         return "checkout";
 
+    }
+
+    @GetMapping("/superflyer")
+    public ResponseEntity<byte[]> getFlyerPDF() throws IOException {
+        return shopFeignClient.getFlyer();
     }
 }
