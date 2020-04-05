@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
+import ru.geekbrains.supershop.persistence.entities.Product;
 import ru.geekbrains.supershop.persistence.entities.Review;
 import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.services.ProductService;
@@ -47,6 +48,7 @@ public class ShopController {
     private final ShopFeignClient shopFeignClient;
 //    private final PriceService priceService;
 
+/* Версия отбора через Репозиторий
     @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index(Model model,
@@ -55,6 +57,19 @@ public class ShopController {
         model.addAttribute("city", cityName);
         model.addAttribute("cart", cart.getCartRecords());
         model.addAttribute("products", productService.findAll(available, category));
+        return "index";
+    }
+*/
+
+    // Версия отбора через entityManager
+    @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
+    @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+    public String index(Model model,
+                        @RequestParam(required = false) Integer category,
+                        @RequestParam(required = false) Boolean available) {
+        model.addAttribute("city", cityName);
+        model.addAttribute("cart", cart.getCartRecords());
+        model.addAttribute("products", productService.getAvailableProductsByCategory(category, available));
         return "index";
     }
 
