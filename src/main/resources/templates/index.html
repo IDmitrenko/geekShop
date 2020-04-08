@@ -104,6 +104,50 @@
             </table>
             <hr>
 
+            Критерии поиска:
+            <form th:action="@{/}" method="get" class="col-12">
+                <div class="row">
+                    <div class="col-3">
+                        <label>
+                            Категория:
+                            <select name="category">
+                                <option th:text="'Не выбрано'" th:value="null"></option>
+                                <!--suppress ThymeleafVariablesResolveInspection -->
+                                <option th:each="category : ${T(ru.geekbrains.supershop.persistence.entities.enums.ProductCategory).values()}"
+                                        th:value="${category.ordinal()}"
+                                        th:text="${category.name}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <label>
+                            Цена<br>
+                            <div class="form-group row">
+                                <label for="minPrice" class="col-3 col-form-label">от:</label>
+                                <input type="number" class="form-control col" placeholder="0" min="0" max="100000" name="minPrice" id="minPrice">
+                            </div>
+                            <div class="form-group row">
+                                <label for="maxPrice" class="col-3 col-form-label">от:</label>
+                                <input type="number" class="form-control col" placeholder="10000" min="0" max="100000" name="maxPrice" id="maxPrice">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-3">
+                        <label>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" name="notAvailable" id="available">
+                                <label class="form-check-label" for="available">отсутствующие товары</label>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit">применить</button>
+                    </div>
+                </div>
+            </form>
+
+<!--
             <div class="row">
                 <div class="col-sm">
                     Категория продуктов:
@@ -124,6 +168,7 @@
                         </div>
                     </form>
                 </div>
+-->
                 <div class="col-sm">
                     <a sec:authorize="hasRole('ADMIN')" class="nav-link" th:href="@{/admin}" th:text="admin">ADMIN</a>
                 </div>

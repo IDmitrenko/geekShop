@@ -63,6 +63,42 @@ public class ProductService {
 */
     }
 
+    public List<Product> findAll(Integer category, Integer minPrice, Integer maxPrice, Boolean notAvailable) {
+
+        if (category == null && minPrice == null &&
+                maxPrice == null && notAvailable == null) {
+            return productRepository.findAll();
+        }
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (category != null) {
+            predicates.add(criteriaBuilder.equal(root.get("category"), category));
+        }
+
+        if (minPrice != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+        }
+
+        if (maxPrice != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+        }
+
+        if (notAvailable != null) {
+            predicates.add(criteriaBuilder.isTrue(root.get("available")));
+        }
+
+        criteriaQuery.select(root);  // если в запросе много сущностей (указываем из какой выбираем)
+        criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[]{})));
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+/*
     public List<Product> getAvailableProductsByCategory(Integer category, Boolean available) {
         if (available == null && category == null) {
             return productRepository.findAll();
@@ -87,6 +123,7 @@ public class ProductService {
 
         return productList;
     }
+*/
 
     @Transactional
     public String save(ProductPojo productPojo, Image image) {

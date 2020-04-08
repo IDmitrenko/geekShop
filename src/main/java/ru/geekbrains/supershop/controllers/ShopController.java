@@ -48,19 +48,20 @@ public class ShopController {
     private final ShopFeignClient shopFeignClient;
 //    private final PriceService priceService;
 
-/* Версия отбора через Репозиторий
+// Версия отбора через Репозиторий
     @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index(Model model,
                         @RequestParam(required = false) Integer category,
-                        @RequestParam(required = false) Boolean available) {
-        model.addAttribute("city", cityName);
+                        @RequestParam(required = false) Integer minPrice,
+                        @RequestParam(required = false) Integer maxPrice,
+                        @RequestParam(required = false) Boolean notAvailable) {
         model.addAttribute("cart", cart.getCartRecords());
-        model.addAttribute("products", productService.findAll(available, category));
+        model.addAttribute("products", productService.findAll(category, minPrice, maxPrice, notAvailable));
         return "index";
     }
-*/
 
+/*
     // Версия отбора через entityManager
     @ApiOperation(value = "Главная страница. Список продуктов.", response = String.class)
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
@@ -72,6 +73,7 @@ public class ShopController {
         model.addAttribute("products", productService.getAvailableProductsByCategory(category, available));
         return "index";
     }
+*/
 
     @ApiOperation(value = "Cтраница Администратора.", response = String.class)
     @GetMapping("/admin")
