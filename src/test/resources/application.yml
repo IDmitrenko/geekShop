@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: false
+
+files:
+  storepath:
+    icons:
+    images:
+
+supershop:
+  rabbitmq:
+    exchange:
+    routingkey:
+    queue:
+
+documents:
+  service:
+    url:

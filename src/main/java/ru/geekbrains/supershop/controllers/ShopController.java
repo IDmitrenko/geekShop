@@ -36,9 +36,11 @@ import java.util.List;
 @Api(value = "ShopController", description = "Набор сервисных методов")
 public class ShopController {
 
+/* TODO конфиг сервер - отключил (чтобы не запускать еще одну задачу и из-за тестирования)
     @Value("${supershop.city}")
     // Берем properties с конфиг-сервера
     private String cityName;
+*/
 
     private final Cart cart;
     private final CaptchaGenerator captchaGenerator;

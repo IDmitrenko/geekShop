@@ -119,4 +119,8 @@ public class ReviewService {
 
         return reviews;
     }
+
+    public List<Review> getAll() {
+        return reviewRepository.findAll();
+    }
 }

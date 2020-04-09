@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.supershop.exceptions.EntityNotFoundException;
 import ru.geekbrains.supershop.persistence.entities.Image;
 import ru.geekbrains.supershop.persistence.entities.Product;
-import ru.geekbrains.supershop.persistence.entities.Review;
-import ru.geekbrains.supershop.persistence.entities.Shopuser;
 import ru.geekbrains.supershop.persistence.entities.enums.ProductCategory;
 import ru.geekbrains.supershop.persistence.pojo.ProductPojo;
 import ru.geekbrains.supershop.persistence.repositories.ProductRepository;
