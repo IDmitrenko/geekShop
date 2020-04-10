@@ -1,0 +1,52 @@
+[
+  {
+    "id": "7bb31a05-9ca1-492b-9637-8de656f4c3d3",
+    "commentary": "Наша семья очень любит яблоки",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": null
+    },
+    "approved": true,
+    "image": null
+  },
+  {
+    "id": "8cd1e1d8-73ea-4d7f-bc47-f695f00c2dab",
+    "commentary": "Мы покупаем яблоки каждую неделю",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": null
+    },
+    "approved": false,
+    "image": null
+  }
+]

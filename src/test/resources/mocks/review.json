@@ -1,0 +1,26 @@
+{
+  "id" : "e4bcc65a-6f84-4e3a-9716-5ebcee8bca26",
+  "commentary": "Очень вкусный сыр",
+  "product": {
+    "id": "71806436-ce5c-49ea-aea0-7ad01c14015e",
+    "title": "Сыр Тильзиетер",
+    "description": "Производство Голландия",
+    "price": "658.00",
+    "available": true,
+    "category": "1"
+  },
+  "shopuser": {
+    "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+    "phone": "22222222",
+    "password": "admin",
+    "email": "user@supershop.com",
+    "role": "ROLE_CUSTOMER",
+    "first_name": "User",
+    "last_name": "User"
+  },
+  "approved": false,
+  "image": {
+    "id": "a8d2c502-3d78-4a4c-b07a-d5f36c914545",
+    "name": "22222222_babc9f03-931e-4b46-97bd-bf8a6a788619.png"
+  }
+}

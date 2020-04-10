@@ -4,7 +4,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,7 @@ import ru.geekbrains.supershop.services.utils.CHelper;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,7 +42,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping(name="/products")
 @Api(value = "ProductController", description = "Набор методов для витрины магазина")
 public class ProductController {
 
@@ -152,4 +156,10 @@ public class ProductController {
 //        }
     }
 
+    @PostMapping(value = "/review")
+    public ResponseEntity<Review> addReview(@RequestBody Review review,
+                                            HttpSession session) {
+        reviewService.save(review);
+        return new ResponseEntity<Review>(review, HttpStatus.CREATED);
+    }
 }

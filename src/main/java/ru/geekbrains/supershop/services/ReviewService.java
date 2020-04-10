@@ -40,8 +40,8 @@ public class ReviewService {
     }
 
 
-    public void save(Review review) {
-        reviewRepository.save(review);
+    public Review save(Review review) {
+        return reviewRepository.save(review);
     }
 
     public UUID moderate(UUID id, String option) throws EntityNotFoundException {
