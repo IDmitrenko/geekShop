@@ -3,6 +3,7 @@ package ru.geekbrains.supershop.configurations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http //.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/products/review").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/profile/**").authenticated()
                 .antMatchers("/orders/history").authenticated()

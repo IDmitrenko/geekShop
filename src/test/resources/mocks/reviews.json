@@ -1,0 +1,232 @@
+[
+  {
+    "id": "8130f217-8a8b-4765-b358-4eb9b91a5939",
+    "commentary": "Пополняет запас витаминов для организма",
+    "shopuser": {
+      "id": "fbe5a8e7-8555-4ee8-bff2-c572447e5f25",
+      "phone": "11111111",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "Admin",
+      "lastName": "Admin",
+      "email": "admin@supershop.com",
+      "role": "ROLE_ADMIN"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": {
+        "id": "08b39bd2-5357-43f1-aa3e-d1b9ce028e5e",
+        "name": "apple.png"
+      }
+    },
+    "approved": true,
+    "image": null
+  },
+  {
+    "id": "882a552c-80a0-4880-bc78-7c06d0468e56",
+    "commentary": "Вкусный и сочный фрукт",
+    "shopuser": {
+      "id": "6b718067-e1e4-4202-a7e2-7339ea0d6cb4",
+      "phone": "anonymous",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "anonymous",
+      "lastName": "anonymous",
+      "email": "anonymous@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": {
+        "id": "08b39bd2-5357-43f1-aa3e-d1b9ce028e5e",
+        "name": "apple.png"
+      }
+    },
+    "approved": true,
+    "image": null
+  },
+  {
+    "id": "0911f6fb-243a-444f-86df-959406163cd3",
+    "commentary": "Кладезь железа для организма",
+    "shopuser": {
+      "id": "6b718067-e1e4-4202-a7e2-7339ea0d6cb4",
+      "phone": "anonymous",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "anonymous",
+      "lastName": "anonymous",
+      "email": "anonymous@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": {
+        "id": "08b39bd2-5357-43f1-aa3e-d1b9ce028e5e",
+        "name": "apple.png"
+      }
+    },
+    "approved": true,
+    "image": null
+  },
+  {
+    "id": "7bb31a05-9ca1-492b-9637-8de656f4c3d3",
+    "commentary": "Наша семья очень любит яблоки",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": {
+        "id": "08b39bd2-5357-43f1-aa3e-d1b9ce028e5e",
+        "name": "apple.png"
+      }
+    },
+    "approved": true,
+    "image": null
+  },
+  {
+    "id": "8cd1e1d8-73ea-4d7f-bc47-f695f00c2dab",
+    "commentary": "Мы покупаем яблоки каждую неделю",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "babc9f03-931e-4b46-97bd-bf8a6a788619",
+      "title": "Яблоки",
+      "description": null,
+      "added": 1584302061184,
+      "price": 150,
+      "available": false,
+      "category": "FOOD",
+      "image": {
+        "id": "08b39bd2-5357-43f1-aa3e-d1b9ce028e5e",
+        "name": "apple.png"
+      }
+    },
+    "approved": false,
+    "image": {
+      "id": "a8d2c502-3d78-4a4c-b07a-d5f36c914545",
+      "name": "22222222_babc9f03-931e-4b46-97bd-bf8a6a788619.png"
+    }
+  },
+  {
+    "id": "280fc264-ad6a-4878-a0c9-1520e05e82ff",
+    "commentary": "Очень любим черняшечку с салом",
+    "shopuser": {
+      "id": "6b718067-e1e4-4202-a7e2-7339ea0d6cb4",
+      "phone": "anonymous",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "anonymous",
+      "lastName": "anonymous",
+      "email": "anonymous@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "304e03f4-ce8c-4f20-9214-3e077f76bb91",
+      "title": "Хлеб",
+      "description": null,
+      "added": 1584302061184,
+      "price": 50,
+      "available": true,
+      "category": "FOOD",
+      "image": {
+        "id": "290679fa-9812-44c6-aa22-df5689d99e14",
+        "name": "bread.png"
+      }
+    },
+    "approved": false,
+    "image": {
+      "id": "9f0fd551-ebb2-4c7c-a309-e2f43e8c9512",
+      "name": "anonymous_304e03f4-ce8c-4f20-9214-3e077f76bb91.png"
+    }
+  },
+  {
+    "id": "98ff51cb-8e89-4f3d-a218-576317b650a8",
+    "commentary": "Супер чай!",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "403ae2c8-8df0-4393-87b7-1928a2289c46",
+      "title": "Чай ",
+      "description": null,
+      "added": 1584343169622,
+      "price": 50,
+      "available": true,
+      "category": "DRINK",
+      "image": {
+        "id": "62b68ec4-7e33-4bce-a27e-cffb558040f1",
+        "name": "tea.png"
+      }
+    },
+    "approved": false,
+    "image": null
+  },
+  {
+    "id": "e4bcc65a-6f84-4e3a-9716-5ebcee8bca26",
+    "commentary": "Не похудеешь, но очень вкусно с супер чаем! ",
+    "shopuser": {
+      "id": "04c8bd30-ba4e-4e82-b996-db907e37a2c6",
+      "phone": "22222222",
+      "password": "$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2",
+      "firstName": "User",
+      "lastName": "User",
+      "email": "user@supershop.com",
+      "role": "ROLE_CUSTOMER"
+    },
+    "product": {
+      "id": "b584b51d-2aa6-4c95-a17b-775a2c7918e9",
+      "title": "Пончики",
+      "description": null,
+      "added": 1584343169622,
+      "price": 10,
+      "available": true,
+      "category": "FOOD",
+      "image": {
+        "id": "90806402-753e-436b-85c4-cbe84e4644eb",
+        "name": "donut.png"
+      }
+    },
+    "approved": false,
+    "image": null
+  }
+]

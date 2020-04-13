@@ -31,8 +31,8 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @RunWith(SpringRunner.class)
-@ContextConfiguration(initializers = {ProductRepotoryDockerContainerTest.Initializer.class})
-public class ProductRepotoryDockerContainerTest {
+@ContextConfiguration(initializers = {ProductRepositoryDockerContainerTest.Initializer.class})
+public class ProductRepositoryDockerContainerTest {
 
     @ClassRule
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres");
