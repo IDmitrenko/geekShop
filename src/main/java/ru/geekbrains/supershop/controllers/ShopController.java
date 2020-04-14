@@ -12,10 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
-import ru.geekbrains.supershop.persistence.entities.Product;
-import ru.geekbrains.supershop.persistence.entities.Review;
-import ru.geekbrains.supershop.persistence.entities.Shopuser;
+import ru.geekbrains.supershop.persistence.entities.*;
 import ru.geekbrains.supershop.services.ProductService;
+import ru.geekbrains.supershop.services.PurchaseService;
 import ru.geekbrains.supershop.services.ReviewService;
 import ru.geekbrains.supershop.services.ShopuserService;
 import ru.geekbrains.supershop.services.feign.clients.ShopFeignClient;
@@ -30,6 +29,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,6 +45,7 @@ public class ShopController {
     private final Cart cart;
     private final CaptchaGenerator captchaGenerator;
     private final ProductService productService;
+    private final PurchaseService purchaseService;
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
     private final ShopFeignClient shopFeignClient;
@@ -135,6 +136,29 @@ public class ShopController {
         model.addAttribute("cart", cart);
 
         return "checkout";
+
+    }
+
+    @PostMapping("/purchase")
+    public String finishOrderAndPay(String phone, String email, Principal principal, Model model) {
+
+        Shopuser shopuser = shopuserService.findByPhone(principal.getName());
+
+        Purchase purchase = Purchase.builder()
+                .shopuser(shopuser)
+                .products(cart.getCartRecords()
+                        .stream()
+                        .map(CartRecord::getProduct)
+                        .collect(Collectors.toList())
+                )
+                .price(cart.getPrice() + cart.getPayment().getFee())
+                .phone(phone)
+                .email(email)
+                .build();
+
+        model.addAttribute("purchase", purchaseService.makePurchase(purchase));
+
+        return "orderdone";
 
     }
 

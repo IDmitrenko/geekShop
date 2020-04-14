@@ -55,7 +55,7 @@ dependencies {
 //		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 //	}
 
-//	testImplementation 'com.h2database:h2:1.4.197' // для модульных и MVC тестов
+	testImplementation 'com.h2database:h2:1.4.197' // для модульных и MVC тестов
     testImplementation 'org.testcontainers:postgresql:1.11.2'  // для интеграционных тестов
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

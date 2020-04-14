@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="RU">
+<head>
+    <meta charset="utf-8"/>
+    <title>Super Shop</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <br>
+    <div th:replace="~{navigation :: navigation(Home)}" />
+    <br>
+    <div style="text-align: center;">
+        <h1>Ваш заказ : [[ ${purchase.id} ]]</h1>
+        <hr>
+        <h2>СПАСИБО ЗА ПОКУПКУ!</h2>
+    </div>
+
+</div>
+</body>
+</html>

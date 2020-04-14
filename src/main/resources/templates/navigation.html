@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="RU">
+<div th:fragment="navigation(activeTab)">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav" style="margin-left: auto;margin-right: auto;">
+                <div class="container" sec:authorize="isAuthenticated()">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary" th:onclick="'window.location.href = \'' + @{/} + '\''">Главная</button>
+                                <button type="button" class="btn btn-secondary" th:onclick="'window.location.href = \'' + @{/profile} + '\''">Профиль</button>
+                                <button type="button" class="btn btn-secondary" th:onclick="'window.location.href = \'' + @{/cart} + '\''">Корзина</button>
+                                <button type="button" class="btn btn-danger" th:onclick="'window.location.href = \'' + @{/logout} + '\''">Выход</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" sec:authorize="isAnonymous()">
+                    <form th:action="@{/authenticateTheUser}" method="POST" class="form-inline">
+                        <div class="row" style="margin-left: auto;margin-right: auto;">
+                            <div class="col-sm">
+                                <input type="text" name="username" placeholder="username" class="form-control">
+                            </div>
+                            <div class="col-sm">
+                                <input type="password" name="password" placeholder="password" class="form-control">
+                            </div>
+                            <div class="col-sm">
+                                <button type="submit" class="btn btn-success">вход</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</html>
