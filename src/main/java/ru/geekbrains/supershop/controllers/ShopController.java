@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.paymentservice.Payment;
 import ru.geekbrains.supershop.beans.Cart;
 import ru.geekbrains.supershop.persistence.entities.*;
-import ru.geekbrains.supershop.services.ProductService;
-import ru.geekbrains.supershop.services.PurchaseService;
-import ru.geekbrains.supershop.services.ReviewService;
-import ru.geekbrains.supershop.services.ShopuserService;
+import ru.geekbrains.supershop.persistence.pojo.Mail;
+import ru.geekbrains.supershop.services.*;
 import ru.geekbrains.supershop.services.feign.clients.ShopFeignClient;
 import ru.geekbrains.supershop.utils.CaptchaGenerator;
 import ru.geekbrains.supershop.utils.Validators;
@@ -29,6 +27,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Controller
@@ -46,6 +45,7 @@ public class ShopController {
     private final CaptchaGenerator captchaGenerator;
     private final ProductService productService;
     private final PurchaseService purchaseService;
+    private final MailServiceImpl mailService;
     private final ReviewService reviewService;
     private final ShopuserService shopuserService;
     private final ShopFeignClient shopFeignClient;
@@ -157,6 +157,20 @@ public class ShopController {
                 .build();
 
         model.addAttribute("purchase", purchaseService.makePurchase(purchase));
+
+        Mail mail = new Mail();
+        mail.setMailFrom("Интернет-магазин Super Shop");
+        mail.setMailTo(shopuser.getEmail());
+        mail.setMailSubject("antonshu.pro - password recovery");
+        String token = UUID.randomUUID().toString();
+        String url = "/user/changePassword?id=" +
+                shopuser.getId() + "&token=" + token;
+        StringBuilder mailBody = new StringBuilder();
+        mailBody.append("Learn How to reset password using Spring Boot!!!\n\n")
+                .append("For reset you pass go to: https://antonshu.pro:8023/app")
+                .append(url);
+        mail.setMailContent(mailBody.toString());
+        mailService.sendEmail(mail);
 
         return "orderdone";
 
