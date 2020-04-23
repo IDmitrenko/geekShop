@@ -26,13 +26,16 @@ spring:
     multipart:
       max-file-size: 10000000     #10MB
       max-request-size: 10000000  #10MB
+  mail:
+    port: 465
+    host: smtp.mail.ru
+    password: 12345
+    username: 8@mail.ru
 
 files:
   storepath:
     icons:  "E:\\GeekBrains\\geekshop\\uploads\\icons"
     images: "E:\\GeekBrains\\geekshop\\uploads\\images"
-#    icons:  "C:\\Java\\uploads\\icons"
-#    images: "C:\\Java\\uploads\\images"
 
 supershop:
   rabbitmq:

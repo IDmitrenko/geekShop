@@ -1,3 +1,7 @@
+/*
+ Создание функции для uuid с консоли БД
+ CREATE EXTENSION "uuid-ossp"
+*/
 CREATE SCHEMA IF NOT EXISTS public;
 
 DROP TABLE IF EXISTS image;

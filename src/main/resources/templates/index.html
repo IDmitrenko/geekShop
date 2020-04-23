@@ -48,15 +48,6 @@
                                     <img th:src="@{'/products/images/' + ${product.id}}" alt="" width="50px" height="50px" />
                                 </div>
                             </td>
-<!--
-                            &lt;!&ndash;/*@thymesVar id="images" type="ru.geekbrains.supershop.persistence.entities.Image"*/&ndash;&gt;
-                            <td th:each="image : ${product.images}">
-                                <div>
-                                    <img th:if="${image.id != null}"
-                                         th:src="@{'/products/imagesn/' + ${image.id}}" alt="" width="50px" height="50px" />
-                                </div>
-                            </td>
--->
                             <td th:text="${product.description}"/>
                             <td th:text="${product.price}"/>
                             <td th:text="${#dates.format(product.added, 'dd-MM-yyyy')}"/>
