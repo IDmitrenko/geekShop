@@ -15,12 +15,14 @@ import java.util.Locale;
 @Configuration
 //@PropertySource("classpath:private.properties")
 public class AppConfig implements WebMvcConfigurer {
+/*
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/images/**")) {
             registry.addResourceHandler("/images/**").addResourceLocations("file:images/");
         }
     }
+*/
 
     @Bean
     public LocaleResolver localeResolver() {
